@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputScript library="javax.faces" name="jsf.js" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title></title>
+
+	<script type="text/javascript">
+		function handle(data) {
+			var inputText = document.getElementById("inName");
+			if (data.type === "event" &amp;&amp; inputText.value !== null) {
+				var text = inputText.value;
+				text = text + "Name: " + data.source.id;
+				text = text + " Event: " + data.name + "\n";
+				console.log("Data type is " + data.type);
+				alert("Data type is " + data.type)
+			} else {
+				text = text + " Error: " + data.name + "\n";
+				console.log("Data type is " + data.type);
+				alert("Data type is " + data.type)
+			}
+			inputText.value = text;
+		};
+		jsf.ajax.addOnError(handle);
+	</script>
+
+</h:head>
+<h:body>
+
+	<h:form id="form1">
+
+		<br />
+		<br />
+		<h:outputLabel for="countries" value="Countries" />
+		<h:selectOneMenu id="countries" value="#{ajaxBean.countryName}">
+			<f:selectItem itemLabel="Choose a country" />
+			<f:selectItems value="#{ajaxBean.countries}" />
+			<f:ajax render="cities" />
+		</h:selectOneMenu>
+
+		<br />
+		<br />
+		<h:outputLabel for="cities" value="Cities" />
+		<h:selectOneMenu id="cities" disabled="#{ajaxBean.isCityListDisabled}">
+			<f:selectItems value="#{ajaxBean.cities}" />
+		</h:selectOneMenu>
+	</h:form>
+	<br />
+	<br />
+	<h:form id="form2">
+		<h:inputText id="dateInput" value="#{ajaxBean.name}">
+			<f:validator validatorId="DateValidator" />
+		</h:inputText>
+
+		<h:commandButton value="Validate Date" />
+		<h:message for="dateInput" style="color:red" />
+	</h:form>
+
+
+	<h:form id="form3">
+		Error:
+		<br />
+		<h:commandButton value="throw exception normally" />
+		<br />
+		<h:outputText id="outName" value="#{ajaxBean.name}" />
+		<h:inputText id="inName" value="#{ajaxBean.name}" />
+		<br />
+		<h:commandButton value="Submit" action="#{ajaxBean.setTheName}">
+			<f:ajax execute="@form" />
+		</h:commandButton>
+
+
+		<h:messages globalOnly="true"></h:messages>
+	</h:form>
+
+
+</h:body>
+</html>

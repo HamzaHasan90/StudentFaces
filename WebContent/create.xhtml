@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view locale="#{view.locale}">
+	<h:head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<title>Create a Student</title>
+	</h:head>
+	<h:body>				
+
+		<h:outputText value="#{view.locale}"></h:outputText>
+		<h:form id="createForm"
+			dir="#{view.locale=='ar_JO'? 'rtl':'ltr'}">
+
+			<h:outputText value="#{msgs['page.title.create']}"></h:outputText>
+
+			<br />
+			<br />
+
+			<h:messages globalOnly="true" errorStyle="color:red;margin:8px;"
+				infoStyle="color:green;margin:8px;" />
+
+
+			<h:outputLabel value="#{msgs['title.firstName']}" for="fNameInput" />
+			<h:inputText id="fNameInput" value="#{createBean.firstName}"
+				required="true" requiredMessage="#{msgs['error.required.firsname']}"
+				validatorMessage="#{msgs['error.validate.name']}">
+				<f:validateLength minimum="4" maximum="20"></f:validateLength>
+			</h:inputText>
+			<h:message for="fNameInput" errorStyle="color:red;margin:8px;"
+				infoStyle="color:green;margin:8px;"></h:message>
+
+			<br></br>
+
+
+			<h:outputLabel value="#{msgs['title.lastName']}" for="lNameInput" />
+			<h:inputText id="lNameInput" value="#{createBean.lastName}"
+				required="true" requiredMessage="#{msgs['error.required.lastname']}"
+				validatorMessage="#{msgs['error.validate.name']}">
+				<f:validateLength minimum="4" maximum="20"></f:validateLength>
+			</h:inputText>
+
+			<h:message for="lNameInput" errorStyle="color:red;margin:8px;"
+				infoStyle="color:green;margin:8px;"></h:message>
+
+			<br></br>
+
+			<h:outputLabel value="#{msgs['title.age']}" for="inputAge" />
+			<h:inputText id="inputAge" value="#{createBean.age}" required="true"
+				requiredMessage="#{msgs['error.required.age']}"
+				validatorMessage="#{msgs['error.validate.age']}">
+				<f:validateLongRange minimum="10" maximum="100"></f:validateLongRange>
+			</h:inputText>
+
+			<br></br>
+
+
+			<h:outputLabel value="#{msgs['title.mark']}" for="inputMark" />
+			<h:inputText id="inputMark" value="#{createBean.mark}"
+				required="true" requiredMessage="#{msgs['error.required.mark']}">
+			</h:inputText>
+
+			<br></br>
+
+			<h:outputLabel value="#{msgs['title.gender']}" for="inputRadio" />
+			<h:selectOneRadio id="inputRadio" value="#{createBean.gender}"
+				required="true" requiredMessage="#{msgs['error.required.gender']}">
+				<f:selectItem itemLabel="#{msgs['gender.male']}" itemValue="1"></f:selectItem>
+				<f:selectItem itemLabel="#{msgs['gender.female']}" itemValue="2"></f:selectItem>
+			</h:selectOneRadio>
+
+			<br></br>
+			<h:outputLabel value="#{msgs['title.courses']}" for="inputCourses" />
+			<h:selectManyCheckbox value="#{createBean.studentsCoursesIds}"
+				id="inputCourses" required="true"
+				requiredMessage="#{msgs['error.required.courses']}">
+				<f:selectItems var="o" value="#{student.coursesList}"
+					itemValue="#{o.id}" />
+			</h:selectManyCheckbox>
+
+
+			<br></br>
+
+
+			<h:commandButton value="#{msgs['button.create']}"
+				action="#{createBean.createStudent}" />
+
+
+
+
+		</h:form>
+
+
+
+
+	</h:body>
+</f:view>
+</html>

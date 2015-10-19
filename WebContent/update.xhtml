@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view locale="#{view.locale}">
+	<h:head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<title>Update student</title>
+	</h:head>
+	<h:body>
+
+		<f:loadBundle basename="messages" var="msgs" />
+
+		<h:messages errorStyle="color:red;margin:8px;"
+			infoStyle="color:green;margin:8px;" globalOnly="true" />
+
+
+		<b />
+		<b />
+		<h:form id="updateForm"
+			dir="#{view.locale=='ar_JO'? 'rtl':'ltr'}">
+
+			<h:outputText value="#{msgs['page.title.update']}"></h:outputText>
+
+			<br />
+			<br />
+			<br />
+
+			<h:inputHidden value="#{updateBean.id}"></h:inputHidden>
+			<h:inputHidden value="#{updateBean.age}"></h:inputHidden>
+			<h:inputHidden value="#{updateBean.gender}"></h:inputHidden>
+
+			<h:outputLabel value="#{msgs['title.firstName']}" for="fNameInput" />
+			<h:inputText id="fNameInput" value="#{updateBean.firstName}"
+				required="true" requiredMessage="#{msgs['error.required.firsname']}"
+				validatorMessage="#{msgs['error.validate.name']}">
+				<f:validateLength minimum="4" maximum="20"></f:validateLength>
+			</h:inputText>
+
+			<h:message for="fNameInput" errorStyle="color:red;margin:8px;"></h:message>
+
+			<br></br>
+			<h:outputLabel value="#{msgs['title.lastName']}" for="lNameInput" />
+			<h:inputText id="lNameInput" value="#{updateBean.lastName}"
+				required="true" requiredMessage="#{msgs['error.required.lastname']}"
+				validatorMessage="#{msgs['error.validate.name']}">
+				<f:validateLength minimum="4" maximum="20"></f:validateLength>
+
+			</h:inputText>
+
+			<h:message for="lNameInput" errorStyle="color:red;margin:8px;">
+			</h:message>
+			<br></br>
+
+
+			<h:outputLabel value="#{msgs['title.mark']}" for="inputMark" />
+			<h:inputText id="inputMark" value="#{updateBean.mark}"
+				required="true" requiredMessage="#{msgs['error.required.mark']}">
+
+			</h:inputText>
+
+
+
+
+			<br></br>
+			<h:outputLabel value="#{msgs['title.courses']}" for="inputCourses" />
+			<h:selectManyCheckbox value="#{updateBean.studentsCoursesIds}"
+				id="inputCourses" required="true"
+				requiredMessage="#{msgs['error.required.courses']}">
+				<f:selectItems var="o" value="#{student.coursesList}"
+					itemValue="#{o.id}" />
+			</h:selectManyCheckbox>
+
+			<br></br>
+
+			<h:commandButton value="#{msgs['button.save']}"
+				action="#{updateBean.updateStudent}" />
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title></title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+<body>
+	<f:loadBundle basename="messages" var="msgs" />
+
+
+	<h:form id="studentsForm" dir="#{view.locale=='ar_JO'? 'rtl':'ltr'}">
+
+		<h2>
+			<h:outputText value="#{msgs['page.title.StudentsPage']}"></h:outputText>
+		</h2>
+		<br />
+		<br />
+		<br />
+
+		<h:commandLink value="English" action="#{studentBeans.changeLocale}">
+			<f:setPropertyActionListener value="English"
+				target="#{studentBeans.localeCode}"></f:setPropertyActionListener>
+		</h:commandLink>
+		&nbsp;
+		<h:commandLink value="Arabic" action="#{studentBeans.changeLocale}">
+			<f:setPropertyActionListener value="Arabic"
+				target="#{studentBeans.localeCode}"></f:setPropertyActionListener>
+		</h:commandLink>
+		<br />
+
+
+
+
+		<div style="height: 450px; overflow: auto;">
+			<h:dataTable var="s" value="#{student.studentList}" border="2"
+				cellpadding="1">
+
+				<!--oracle-jdev-comment:Faces.RI.DT.Class.Key:model.Student-->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['title.id']}"></h:outputText>
+
+					</f:facet>
+					<h:outputText value="#{s.id}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['title.firstName']}" />
+					</f:facet>
+					<h:outputText value="#{s.firstName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['title.lastName']}" />
+					</f:facet>
+					<h:outputText value="#{s.lastName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['title.age']}" />
+					</f:facet>
+					<h:outputText value="#{s.age}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['title.mark']}" />
+					</f:facet>
+					<h:outputText value="#{s.mark}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['title.gender']}" />
+					</f:facet>
+					<h:outputText value="#{s.gender==1? 'M' : 'F' }" />
+				</h:column>
+				<h:column>
+					<h:commandButton value="#{msgs['button.update']}"
+						action="#{updateBean.retrieveforUpdate}">
+						<f:setPropertyActionListener value="#{s.id}"
+							target="#{updateBean.id}" />
+					</h:commandButton>
+					<h:commandButton value="#{msgs['button.delete']}"
+						action="#{student.deleteStudent}">
+						<f:setPropertyActionListener value="#{s.id}"
+							target="#{student.id}"></f:setPropertyActionListener>
+
+					</h:commandButton>
+				</h:column>
+
+			</h:dataTable>
+		</div>
+
+		<h:commandButton value="#{msgs['button.create']}"
+			action="#{createBean.goToCreate}" />
+
+
+		<h:commandButton value="#{msgs['button.search']}"
+			action="#{searchBean.goToSearch}" />
+
+		<h:commandButton action="#{student.throwError}" value="Throw Error"></h:commandButton>
+
+		<h:messages infoStyle="color:green;margin:8px;" globalOnly="true" />
+		<h:outputText value="#{flash.keep.error}"></h:outputText>
+	</h:form>
+</body>
+</html>

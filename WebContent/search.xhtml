@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view locale="#{view.locale}">
+	<h:head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<title>Search for a student</title>
+	</h:head>
+	<h:body>
+		<f:loadBundle basename="messages" var="msgs" />
+
+		<h:form dir="#{view.locale=='ar_JO'? 'rtl':'ltr'}"
+			id="searchForm">
+			<h:outputLabel for="Search" value="#{msgs['page.title.search']}"></h:outputLabel>
+			<br />
+			<br />
+			<h:inputText id="searchinput" value="#{search.id}" required="true"
+				requiredMessage="#{msgs['error.required.id']}"></h:inputText>
+			<h:message for="searchinput" errorStyle="color:red;margin:8px;" />
+
+			<br />
+			<h:commandButton value="#{msgs['button.search']}"
+				action="#{updateBean.retrieveforSearch}">
+				<f:setPropertyActionListener value="#{search.id}"
+					target="#{updateBean.id}"></f:setPropertyActionListener>
+			</h:commandButton>
+
+		</h:form>
+	</h:body>
+</f:view>
+</html>
